@@ -1,0 +1,823 @@
+import json
+
+# Dados sobre os Povos Yanomami
+dados_yanomami = {
+    "nome": "Povos Yanomami",
+    "localizacao": "América do Sul",
+    "lingua": "Yanomami",
+    "populacao": 35000,
+    "tradicional": True,
+    "informacoes_adicionais": {
+        "cultura": "Cultura rica em tradições e mitologia.",
+        "habitacao": "Casas circulares chamadas 'yano'.",
+        "alimentacao": "Dieta baseada em agricultura, caça e pesca.",
+        "rituais": "Rituais importantes envolvendo danças e cantos.",
+        "etnonimo": "Yanomami, derivado de yanõmami thëpë, significando 'seres humanos'.",
+        "origem": "Remetem sua origem à copulação do demiurgo Omama com a filha do monstro aquático Tëpërësiki.",
+        "regras_sociedade": "Omama é atribuído a origem das regras da sociedade e da cultura yanomami atual.",
+        "espiritos_auxiliares": "Omama criou os espíritos auxiliares dos pajés, conhecidos como 'xapiripë' ou 'hekurapë'.",
+        "primeiro_xama": "O filho de Omama foi o primeiro xamã.",
+        "origem_da_morte": "Yoasi, irmão ciumento e malvado de Omama, é a origem da morte e dos males do mundo.",
+        "origem_estrangeiros": "Os estrangeiros devem sua existência aos poderes demiúrgicos de Omama, criados a partir da espuma do sangue de ancestrais Yanomami levado por uma enchente após a quebra de um resguardo menstrual e devorado por jacarés e ariranhas.",
+        "lingua_estrangeiros": "A língua 'emaranhada' dos forasteiros lhes foi transmitida pelo zumbido de Remori, o antepassado mítico do marimbondo comum nas praias dos grandes rios.",
+        "encontros_estrangeiros": "Os antigos Yanomami tiveram que viver um longo tempo de encontros perigosos e tensos com esses estranhos, que passaram a chamar de napëpë ('estrangeiros, inimigos').",
+        "primeira_visao": "A primeira visão que tiveram dos brancos foi de um grupo de fantasmas vindo de suas moradias nas 'costas do céu' com o escandaloso propósito de voltar a morar no mundo dos vivos.",
+        "origem_yanomami": "Descendentes de um grupo indígena que permaneceu relativamente isolado desde uma época remota.",
+        "ocupacao_territorio": "Os antigos Yanomami teriam ocupado a área das cabeceiras do Orinoco e Parima há um milênio.",
+        "movimento_dispersao": "O movimento de dispersão do povoamento yanomami a partir da Serra Parima em direção às terras baixas circunvizinhas começou na primeira metade do século XIX.",
+        "expansao_geografica": "A expansão geográfica dos Yanomami foi possível, a partir do século XIX e até o começo do século XX, por um importante crescimento demográfico e transformações econômicas.",
+        "contato_anterior": "Até o fim do século XIX, os Yanomami mantinham contato apenas com outros grupos indígenas vizinhos.",
+        "primeiros_encontros_brasil": "No Brasil, os primeiros encontros diretos de grupos yanomami com representantes da fronteira extrativista local, bem como com soldados da Comissão de Limites e funcionários do SPI ou viajantes estrangeiros, ocorreram nas décadas de 1910 a 1940.",
+        "estabelecimento_contato": "Entre os anos 1940 e meados dos anos 1960, a abertura de alguns postos do SPI e, sobretudo, de várias missões católicas e evangélicas, estabeleceu os primeiros pontos de contato permanente no seu território.",
+        "desenvolvimento_estado": "Nas décadas de 1970 e 1980, os projetos de desenvolvimento do Estado começaram a submeter os Yanomami a formas de contato maciço com a fronteira econômica regional em expansão, principalmente no oeste de Roraima: estradas, projetos de colonização, fazendas, serrarias, canteiros de obras e primeiros garimpos.",
+        "impacto_contato": "Esses contatos provocaram um choque epidemiológico de grande magnitude, causando altas perdas demográficas, uma degradação sanitária generalizada e, em algumas áreas, graves fenômenos de desestruturação social.",
+        "formas_contato": "As duas principais formas de contato inicialmente conhecidas pelos Yanomami - primeiro, com a fronteira extrativista e, depois, com a fronteira missionária - coexistiram até o início dos anos 1970 como uma associação dominante no seu território.",
+        "implantacao_projetos": "Os anos 1970 foram marcados pela implantação de projetos de desenvolvimento no âmbito do 'Plano de Integração Nacional', lançado pelos governos militares da época.",
+        "movimento_invasao": "A publicidade dada ao potencial mineral do território yanomami desencadeou um movimento progressivo de invasão garimpeira.",
+        "invasao_garimpeira": "Uma centena de pistas clandestinas de garimpo foi aberta no curso superior dos principais afluentes do Rio Branco entre 1987 e 1990.",
+        "numero_garimpeiros": "O número de garimpeiros na área yanomami de Roraima foi, então, estimado em 30 a 40.000, cerca de cinco vezes a população indígena ali residente.",
+        "persistencia_invasao": "Embora a intensidade dessa corrida do ouro tenha diminuído muito a partir do começo dos anos 1990, até hoje núcleos de garimpagem continuam encravados na terra yanomami, de onde seguem espalhando violência e graves problemas sanitários e sociais.",
+        "interesse_garimpeiro": "Além do persistente interesse garimpeiro sobre a região, quase 60% do território yanomami está coberto por requerimentos e títulos minerários registrados no Departamento Nacional de Produção Mineral.",
+        "expansao_colonizacao": "Os projetos de colonização implementados nas décadas de 1970 e 1980 no leste e sudeste das terras yanomami criaram uma frente de povoamento que tende a expandir-se para dentro da área indígena.",
+        "apagamento_limites": "O apagamento dos limites da demarcação por um mega-incêndio que atingiu Roraima (1998) pode ampliar essa tendência no futuro.",
+        "bases_militares": "Três bases militares do 'Projeto Calha Norte' foram implementadas na Terra Yanomami desde 1985, induzindo graves problemas sociais nas populações locais.",
+        "tipos_habitacao": "Os grupos locais yanomami são geralmente constituídos por uma casa plurifamiliar em forma de cone ou de cone truncado chamado yano ou xapono (Yanomami orientais e ocidentais), ou por aldeias compostas de casas de tipos retangulares (Yanomami do norte e nordeste).",
+        "relacoes_troca": "Apesar do ideal autárquico, todos grupos locais mantêm uma rede de relações de troca matrimonial, cerimonial e econômica com vários grupos vizinhos, considerados aliados frente aos outros conjuntos multicomunitários da mesma natureza.",
+        "espaco_social": "O espaço social fora da casa coletiva ou da aldeia, consideradas como mônadas de parentesco próximo, é tido com desconfiança como o universo perigoso dos 'outros' (yaiyo thëpë).",
+        "uso_territorio": "O espaço de floresta usado por cada casa-aldeia yanomami pode ser descrito esquematicamente como uma série de círculos concêntricos.",
+        "significado_urihi": "A palavra yanomami urihi designa a floresta e seu chão. Significa também território.",
+        "entidade_viva": "Para os Yanomami, a terra-floresta é uma entidade viva, com uma imagem essencial, um sopro e um princípio imaterial de fertilidade.",
+        "animais": "Os animais que a floresta abriga são vistos como avatares dos antepassados míticos homens/animais da primeira humanidade.",
+        "seres_maléficos": "Nas profundezas emaranhadas da floresta, escondem-se inúmeros seres maléficos, que ferem ou matam os Yanomami, provocando doenças e mortes.",
+        "xapiripë": "Os xapiripë foram deixados por Omama para que cuidassem dos humanos, cobrindo toda a extensão da floresta.",
+        "morada_monstro": "No fundo das águas, esconde-se a casa do monstro Tëpërësik, sogro de Omama, onde moram também os espíritos yawarioma, cujas irmãs seduzem e enlouquecem os jovens caçadores yanomami."
+        "iniciacao_pajes": {
+            "descricao": "A iniciação dos pajés é dolorosa e extática.",
+            "processo": "Ao longo dela, inalando por muitos dias o pó alucinógeno yãkõana (resina ou fragmentos da casca interna da árvore Virola sp. secados e pulverizados) sob a condução dos mais antigos.",
+            "aprendizado": "Aprendem a 'ver/conhecer' os espíritos xapiripë e a 'responder' a seus cantos."
+        },
+        "xapiripë": {
+            "descricao": "Os xapiripë são vistos sob a forma de miniaturas humanóides enfeitadas de ornamentos cerimoniais coloridos e brilhantes.",
+            "danca": "Sua dança de apresentação é comparada à ruidosa e alegre chegada de grupos convidados, ricamente adornados, numa festa intercomunitária reahu.",
+            "natureza": [
+                "São sobretudo 'imagens' xamânicas (utupë) de entes da floresta.",
+                "Existem xapiripë de mamíferos, pássaros, peixes, batráquios, répteis, lagartos, quelônios, crustáceos e insetos.",
+                "Espíritos das árvores, das folhas, dos cipós, dos méis silvestres, da água, das pedras, das cachoeiras.",
+                "Entidades cósmicas como lua, sol, tempestade, trovão, relâmpago, personagens mitológicas.",
+                "Xapiripë caseiros como o espírito do cachorro, do fogo ou da panela de barro.",
+                "Espíritos dos 'brancos' (os napënapëripë) e de seus animais domésticos (galinha, boi, cavalo)."
+            ]
+        }
+    }
+}
+
+# Dados sobre REFERENCIAS
+dados_refer = {
+    "publications": [
+        {
+            "title": "O corpo é uma bola de cristal para se ler o estado da sociedade e do mundo : entrevista",
+            "journal": "Tempo e Presença",
+            "location": "Rio de Janeiro",
+            "publisher": "Cedi",
+            "volume": "13",
+            "issue": "260",
+            "pages": "25-26",
+            "date": "nov./dez. 1991"
+        },
+        {
+            "title": "Homem, cultura e sociedade em uma nova era de descobertas",
+            "journal": "O Universo de Marília",
+            "location": "Marília",
+            "publisher": "Famema",
+            "volume": "5",
+            "issue": "1",
+            "pages": "5-8",
+            "date": "jan./jun. 2013"
+        },
+        {
+            "title": "As palavras têm o poder de transformar o mundo",
+            "journal": "Pensamento e Ação",
+            "location": "São Paulo",
+            "publisher": "Unip",
+            "volume": "8",
+            "issue": "3",
+            "pages": "13-16",
+            "date": "jul./set. 2000"
+        }
+    
+    }
+
+    dados_dicionario = {
+    {
+  "-KA": {
+    "description": "sufixo classificador de aberturas",
+    "examples": ["huhika (ubá)", "hyka (narina)", "maamaka (caverna)", "perioka (porta)"]
+  },
+  "KAE": {
+    "description": "e",
+    "example": "yokura hesike kae pihio (sal pente e quero)"
+  },
+  "KAHAWA": {
+    "description": "tu, você; marca da 2ª pessoa do singular",
+    "related": ["wa"]
+  },
+  "KAHAWAHAKE": {
+    "description": "vós dois, vocês dois, vós duas, vocês duas; marca do dual",
+    "related": ["wahake"]
+  },
+  "KAHAWAMAKÊ": {
+    "description": "vós, vocês; marca da 2ª pessoa do plural",
+    "related": ["wa make"]
+  },
+  "KAHIKE": {
+    "description": "boca"
+  },
+  "KAHIUPE": {
+    "description": "baba"
+  },
+  "KAHORA": {
+    "description": "abr. de thaka hora"
+  },
+  "KAI": {
+    "description": "item usado pelos Iropitheri",
+    "related": ["kayU"]
+  },
+  "KAIHIRIMA": {
+    "description": "jararaca (bothrops atrox)"
+  },
+  "KAKA-": {
+    "description": "rasgar",
+    "example": "ya sike kakaki (eu papel rasgo)"
+  },
+  "KAKURUME": {
+    "description": "quartzo"
+  },
+  "KAMA": {
+    "description": "(1) ele, ela; marca da 3ª pessoa do singular",
+    "related": ["a"]
+  },
+  "KAMAKYPE": {
+    "description": "eles dois, elas duas; marca do dual",
+    "related": ["zjr:pe"]
+  },
+  "KAMAPÊ": {
+    "description": "eles, elas; marca da 3ª pessoa do plural",
+    "related": ["pe"]
+  },
+  "KAMI": {
+    "description": "abr. de kamiya"
+  },
+  "KAMIYÃ": {
+    "description": "eu; marca da lª pessoa do singular",
+    "related": ["kami", "ya"]
+  },
+  "KAMIYAHAKE": {
+    "description": "nós dois, nós duas; marca do dual",
+    "related": ["yahake"]
+  },
+  "KAMIYÃMAKE": {
+    "description": "nós; marca da lª pessoa do plural",
+    "related": ["yãmake"]
+  },
+  "KAMIYÃO": {
+    "description": "caminhão"
+  },
+  "KANA": {
+    "description": "ariranha (Pteronura brasiliensis)"
+  },
+  "KANASI": {
+    "description": "(1) marca, sinal. (2) Resto, sobra"
+  },
+  "KANTUNA": {
+    "description": "esp. de esquilo, mamifero da família Sciuridae"
+  },
+  "KAO": {
+    "description": "colocado na água, imergido"
+  },
+  "KAOKAO": {
+    "description": "esp. de gavião, ave da família Accipitridae"
+  },
+  "KAPAMU-": {
+    "description": "medir, experimentar a fundura"
+  },
+  "KAPARAXI": {
+    "description": "(1) musgo. (2) Cocar feito desse musgo"
+  },
+  "KAPRANI-": {
+    "description": "colocar carne para cozinhar"
+  },
+  "KARAKA": {
+    "description": "galinha"
+  },
+  "KARE-": {
+    "description": "flutuar, navegar"
+  },
+  "KAREPU-": {
+    "description": "(1) ter rolo de tabaco entre lábio e dentes. (2) Fumar"
+  },
+  "KARO": {
+    "description": "carro"
+  },
+  "KARO-": {
+    "description": "(1) abrir. (2) Folhear"
+  },
+  "KASI": {
+    "description": "(1) beira, margem. (2) Lábio"
+  },
+  "KASI HORA": {
+    "description": "furo labial"
+  },
+  "KASI IHETE": {
+    "description": "diz-se de um recipiente cheio"
+  },
+  "KASI KOI": {
+    "description": "bigode"
+  },
+  "KASI PEXI-": {
+    "description": "desejar tabaco"
+  },
+  "KATEHE!RIME": {
+    "description": "direita"
+  },
+  "KATETA-": {
+    "description": "pisar"
+  },
+  "KATHY": {
+    "description": "(1) suspenso, atravessado. (2) Ponte, armação"
+  },
+  "KAU": {
+    "description": "brotado"
+  },
+  "KAWAHI": {
+    "description": "poraquê (Electrophorus electricus)"
+  },
+  "KAWAHI PORA": {
+    "description": "cachoeira do Poraquê"
+  },
+  "KAXI": {
+    "description": "esp. de formiga, inseto da família Formicidae"
+  },
+  "KAXIPI U": {
+    "description": "rio Jundiá"
+  },
+  "KAXIPIUTHERI": {
+    "description": "nome antigo do grupo local que atualmente se denomina Hewenahipitheri"
+  },
+  "KAXURARIOI": {
+    "description": "cansado"
+  },
+  "KAYA-": {
+    "description": "manquejar, coxear"
+  },
+  "KAYU": {
+    "description": "barba"
+  },
+  "KAYU-": {
+    "description": "capivara (Hidrochoerus hidrochoeris)"
+  },
+  "KE-": {
+    "description": "(1) cair. (2) Aterrissar"
+  },
+  "KEPRA-": {
+    "description": "quebrar. Nascer"
+  },
+  "KESEKAMÊ": {
+    "description": "esp. de gafanhoto"
+  },
+  "KETETI": {
+    "description": "doce"
+  },
+  "KE": {
+    "description": "um, uma"
+  },
+  "-KE": {
+    "description": "sufixo do singular; pode exprimir quantidade (um pouco, pouco, alguns)"
+  },
+  "-KI (1)": {
+    "description": "sufixo do imperativo positivo do verbo intransitivo"
+  },
+  "-KI (2)": {
+    "description": "colocar-se, colocar, aprestar-se, preparar-se, aprontar, resolver, terminar, acabar, concluir; sufixo verbal"
+  },
+  "KIHA": {
+    "description": "aí, nesse lugar (perto da pessoa com quem se fala)"
+  },
+  "KIHAME": {
+    "description": "por aí, nessa direção (perto)"
+  },
+  "KIHI": {
+    "description": "esse, essa"
+  },
+  "KIOKIOMU-": {
+    "description": "assobiar da cutia"
+  },
+  "KIRI": {
+    "description": "designação comum a varias especies de aves"
+  },
+  "KIRI-": {
+    "description": "(1) ter medo. (2) Ter vergonha"
+  },
+  "KIYÃ": {
+    "description": "ativo, disposto, zeloso, trabalhador"
+  },
+  "KIYÃ-": {
+    "description": "trabalhar solertemente, zelar"
+  },
+  "KIYAKIYAMU-": {
+    "description": "vibrar"
+  },
+  "KO": {
+    "description": "de novo, novamente, outra vez"
+  },
+  "KO-": {
+    "description": "(1) voltar, chegar, vir. (2) Ir"
+  },
+  "KOA-": {
+    "description": "tomar, beber"
+  },
+  "KOAAXANA": {
+    "description": "esp. de timbó cultivado"
+  },
+  "KOAAXIHI": {
+    "description": "mamique; as folhas servem para se pintar de roxo"
+  },
+  "KOAIMI": {
+    "description": "amargo"
+  },
+  "KOAMAI KOKO": {
+    "description": "esp. de mandioca (Manihot sp)"
+  },
+  "KOANAREAHI": {
+    "description": "jamacim de folha de patauá"
+  },
+  "KOANAREMASI": {
+    "description": "(1) madeira de patauazeiro. (2) Haste feita dessa madeira"
+  },
+  "KOANAREMASIHI": {
+    "description": "patauazeiro"
+  },
+  "KOATOME": {
+    "description": "esp. de papagaio, Psitacidae"
+  },
+  "KOAYO": {
+    "description": "lenha",
+    "related": ["ayõ"]
+  },
+  "KOAYÕMÊ": {
+    "description": "bacurau, ave da família Caprimulgidae"
+  },
+  "KOETHÊ U": {
+    "description": "rio Mapulaú"
+  },
+  "KOHIPE": {
+    "description": "fixo, forte, duro, robusto, sólido, vigoroso"
+  },
+  "KOHOSI": {
+    "description": "osso sacro, sacro"
+  },
+  "KOI": {
+    "description": "pêlo"
+  },
+  "KOIKOIME": {
+    "description": "esp. de gavião, ave da família Accipitridae"
+  },
+  "KOKO/-KOKO": {
+    "description": "classificador de corpos de forma arredondada"
+  },
+  "KOKOI U": {
+    "description": "rio Demini"
+  },
+  "KOMI": {
+    "description": "(1) todo, tudo, inteiro. (2) Fechado, sem caminho, sem abertura"
+  },
+  "KOMO": {
+    "description": "terra baixa alagadiça, terra barrosa, barral"
+  },
+  "KOMOSI": {
+    "description": "(1) fundo, parte de baixo. (2) Parte da perna abaixo da coxa"
+  },
+  "KOMY-": {
+    "description": "gritar"
+  },
+  "KOMYNA": {
+    "description": "nádega"
+  },
+  "KONEHETO": {
+    "description": "coalho, sangue coalhado"
+  },
+  "KONI-": {
+    "description": "trazer de volta"
+  },
+  "KONIKONIKY": {
+    "description": "caldo de carne"
+  },
+  "KONO": {
+    "description": "maguari, ave da família Ardeidae"
+  },
+  "KONOHONI": {
+    "description": "saliva, escarro"
+  },
+  "KOPARI": {
+    "description": "cancã"
+  },
+  "KOPENA": {
+    "description": "caba, vespa, marimbomdo"
+  },
+  "KOPETA": {
+    "description": "barata, pulga"
+  },
+  "KOFY": {
+    "description": "(1) pontudo. (2) Pirarucu, peixe da família Belonidae"
+  },
+  "KORA": {
+    "description": "abr. de koratha"
+  },
+  "KORAI": {
+    "description": "anzol",
+    "related": ["uhe"]
+  },
+  "KORATHA": {
+    "description": "banana",
+    "related": ["kora"]
+  },
+  "KORATHASIHI": {
+    "description": "bananeira"
+  },
+  "KORATHASIKE": {
+    "description": "bananal"
+  },
+  "KORATHA YAI": {
+    "description": "banana-pacovan (Musa sp)"
+  },
+  "KORI": {
+    "description": "japó (Icterus sp)"
+  },
+  "KORIHANAHI": {
+    "description": "imbaúba, embaúba"
+  },
+  "KORIHANATHERI": {
+    "description": "nome antigo do grupo local que atualmente se denomina Wakathautheri"
+  },
+  "KORO": {
+    "description": "(1) parte de baixo. (2) Rio abaixo"
+  },
+  "KOROMANI": {
+    "description": "coró-coró (Mesembrinibis cayennensis)"
+  },
+  "KOTOTOKOTOTOME": {
+    "description": "esp. de ave"
+  },
+  "KOTHAKA": {
+    "description": "curto"
+  },
+  "KOTHE": {
+    "description": "baixo, lado"
+  },
+  "KOTHO": {
+    "description": "cinto masculino, de algodão"
+  },
+  "KOTHO IHIRY": {
+    "description": "cinto masculino, de um só fio de algodão"
+  },
+  "KOYE": {
+    "description": "saúba, saúva, inseto da família Formicidae"
+  },
+  "KOYOTOMASI (1)": {
+    "description": "esp. de ave"
+  },
+  "KOYOTOMASI (2)": {
+    "description": "esp. de tipiti; é usado especialmente durante as festas"
+  },
+  "KRAIWA": {
+    "description": "(1) estrangeiro. (2) Ruim"
+  },
+  "KRAMOKU": {
+    "description": "virilha, ponto de junção da coxa com o ventre"
+  },
+  "KREA-": {
+    "description": "quebrar"
+  },
+  "KREOMANI": {
+    "description": "esp. de tucano (Ramphastos sp)"
+  },
+  "KRERIRANO": {
+    "description": "traço, risco"
+  },
+  "KREYU-": {
+    "description": "crepitar, estalar"
+  },
+  "KROEKROEMA-": {
+    "description": "coçar retirando as crostas da cabeça"
+  },
+  "KROKEHE": {
+    "description": "(1) nuvem. (2) Cinzento, roxo, verde"
+  },
+  "KROKEKROKE": {
+    "description": "nuvem de chuva"
+  },
+  "KROKONA U": {
+    "description": "afluente da margem direita do rio Mucajaí"
+  },
+  "KRUKUKUMNA": {
+    "description": "coruja, ave da família Strigidae"
+  },
+  "KRUKUPE": {
+    "description": "pomo-de-adão, hióide"
+  },
+  "KRUKURI": {
+    "description": "nome de um ser mitológico"
+  },
+  "KU- (1)": {
+    "description": "estar"
+  },
+  "KU- (2)": {
+    "description": "dizer, falar, contar"
+  },
+  "KUAHIKIA": {
+    "description": "está bom, basta, chega"
+  },
+  "KUEMU-": {
+    "description": "copular"
+  },
+  "KUMAMASIKE": {
+    "description": "esp. de planta"
+  },
+  "KUMI": {
+    "description": "esp. de batatinha afrodisíaca"
+  },
+  "KUMI HARO": {
+    "description": "embrulho com pó afrodisíaco feito com batatinha 'kumi'"
+  },
+  "KUMI THÓOTHO": {
+    "description": "esp. de cipó"
+  },
+  "KUNAHA": {
+    "description": "se"
+  },
+  "KUPERE": {
+    "description": "indica ação já acontecida no passado não imediato, testemunhada"
+  },
+  "KUPÊNE": {
+    "description": "indica ação já acontecida no passado imediato, testemunhada"
+  },
+  "KURA": {
+    "description": "indica ação que acontece agora, distante, visível pelo falante"
+  },
+  "KUREKAASI": {
+    "description": "esp. de papagaio, ave da família Psittacidae"
+  },
+  "KUREMÊ": {
+    "description": "jacu (Penelope sp)"
+  },
+  "KURENA": {
+    "description": "igual, assim, como, parecido, desta maneira"
+  },
+  "KURIBA": {
+    "description": "vespa, caba"
+  },
+  "KÚRITI": {
+    "description": "surubim (Pseudoplatystoma fasciatum)"
+  },
+  "KURUXA": {
+    "description": "cedro"
+  },
+  "KUTENE": {
+    "description": "de fato"
+  },
+  "KUTHAATHO": {
+    "description": "esp. de cipó; é usado como timbó"
+  },
+  "KUUKUUMOXI": {
+    "description": "esp. de macaco-da-noite (Aotus trivirgatus)"
+  },
+  "KUXA-": {
+    "description": "cuspir"
+  },
+  "KUXATHASIHI": {
+    "description": "esp. de árvore"
+  },
+  "KUXÊ-": {
+    "description": "desamarrar, desenrolar, desfazer nó"
+  },
+  "KUYUME": {
+    "description": "esp. de gafanhoto",
+    "synonym": "nahanake"
+  },
+  "-KY": {
+    "description": "comprido"
+  },
+  "KYAYNA": {
+    "description": "igual, assim como"
+  },
+  "KYKE": {
+    "description": "classificador de conjuntos. Conjunto, grupo, porção, punhado. Cacho. Ramalhete"
+  },
+  "KYPE": {
+    "description": "(1) eles dois, elas duas; forma presa, marca do dual",
+    "related": ["kamakype"],
+    "example": "thuwe ya kype taama (mulher eu duas vi)"
+  },
+  "KYRYKYRY": {
+    "description": "serra, serrote"
+  }
+}
+
+    "A": {
+        "definition": "ele, ela; forma presa, marca da 3ª pessoa do singular",
+        "examples": [
+            "mia (ele há tempo)",
+            "kama (1)",
+            "-A = há tempo, habitualmente, definitivamente; sufixo que expressa continuidade, permanência"
+        ]
+    },
+    "AHA": {
+        "definition": "teu, tua"
+    },
+    "AHA.AMU-": {
+        "definition": "aproximar, encostar"
+    },
+    "AHE:I": {
+        "definition": "perto, ao lado, nas proximidades"
+    },
+    "AHI": {
+        "definition": "(1) lama, lodo. (2) r.a.macento, molhado"
+    },
+    "AHO": {
+        "definition": "teu, tua"
+    },
+    "AI": {
+        "definition": "outro, outra"
+    },
+    "AIPÊ": {
+        "definition": "(1) tonteira, perturbação, vertigem. (2) Atordoado"
+    },
+    "AIXO": {
+        "definition": "sim, é isto"
+    },
+    "AKA": {
+        "definition": "língua"
+    },
+    "AKA POREPÊ": {
+        "definition": "Imldo"
+    },
+    "AKATAKEMI": {
+        "definition": "Úvula, saliência cônica na parte posterior do véu palatino"
+    },
+    "AKATHAU": {
+        "definition": "partido, rachado"
+    },
+    "AKAXI": {
+        "definition": "ponta"
+    },
+    "AKERE": {
+        "definition": "torto"
+    },
+    "AK.ET.AMU-": {
+        "definition": "estirar-se, espreguiçar-se"
+    },
+    "AKO": {
+        "definition": "folha nova"
+    },
+    "AMAHI": {
+        "definition": "esp. de árvore"
+    },
+    "AMIXI": {
+        "definition": "ter sede"
+    },
+    "AMO": {
+        "definition": "fígado"
+    },
+    "AMO.AMU-": {
+        "definition": "cantar um canto específico, noturno, de homens ou de mulheres"
+    },
+    "AMOKU": {
+        "definition": "estômago"
+    },
+    "AMOKU NENI-": {
+        "definition": "ter disenteria"
+    },
+    "AMOKUTHOXI": {
+        "definition": "esp. de cipó; é usado como remédio contra disenteria"
+    },
+    "AMOMAXIKOPE": {
+        "definition": "paca"
+    },
+    "AMORHA": {
+        "definition": "coração"
+    },
+    "AMORHAUTH H:RI": {
+        "definition": "nome de grupo local, localizado ao lado da Missão Toototobi"
+    },
+    "ANO YI": {
+        "definition": "fel"
+    },
+    "ANIMA": {
+        "definition": "curica (Pionopsi tta barrabandi)"
+    },
+    "APIAHI": {
+        "definition": "abiurana-branca"
+    },
+    "APIARI": {
+        "definition": "tracajá (Podocnemis uni:filis)"
+    },
+    "APINAKÊ": {
+        "definition": "urtiga"
+    },
+    "APIÔ": {
+        "definition": "avião"
+    },
+    "APOKU": {
+        "definition": "(1) ninho. (2) Cacho de fruta de palmeira que brota"
+    },
+    "ARA": {
+        "definition": "esp. de arara (Ara sp)"
+    },
+    "ARA-": {
+        "definition": "colocar em cima, pôr, apoiar"
+    },
+    "ARAHANA": {
+        "definition": "item usado pelos Hewenahipitheri"
+    },
+    "ARAWARI": {
+        "definition": "designação comum a várias espécies de batatinhas usadas para magias"
+    },
+    "ARAWARI KÊ": {
+        "definition": "colar feito com batatinha 'arawari'"
+    },
+    "AREPO": {
+        "definition": "esp. de cupim"
+    },
+    "ARIA": {
+        "definition": "taioba (Colocasia antiquorum)"
+    },
+    "ARO-": {
+        "definition": "sarar, ficar bom"
+    },
+    "ARY.ARYMÊKOXI": {
+        "definition": "esp. de araçari, ave da família Ramphastidae"
+    },
+    "ASAAWASIHI": {
+        "definition": "casca-grossa"
+    },
+    "ATÁRIHI": {
+        "definition": "(1) esp. de árvore. (2) Ponta de flecha feita dessa madeira; é usada para aves e peixes. (3) Flecha que tem essa ponta"
+    },
+    "ATE": {
+        "definition": "cacho sem os frutos"
+    },
+    "ATHE": {
+        "definition": "(1) verde, que ainda não está de vez. (2) Cacho de fruta que brota"
+    },
+    "AU": {
+        "definition": "(1) claro, branco. (2) Loiro. (3) Sem nuvens. (4) Limpo, lavado, sem manchas"
+    },
+    "AU-": {
+        "definition": "tornar limpo, limpar"
+    },
+    "AW": {
+        "definition": "sim"
+    },
+    "AXI": {
+        "definition": "(1) claro. (2) Loiro. (3) Amarelo claro, verde claro"
+    },
+    "AXI-": {
+        "definition": "estar claro. (2) Tornar claro, clarear"
+    },
+    "AXIAI": {
+        "definition": "abr. de marakaxihi"
+    },
+    "AYA": {
+        "definition": "parte, lado"
+    },
+    "AYAMOSI": {
+        "definition": "esp. de caba"
+    },
+    "AYCE": {
+        "definition": "abr. de koayõ"
+    },
+    "AYO": {
+        "definition": "afastar-se, ir, andar, caminhar"
+    },
+    "AYõKOARISINA": {
+        "definition": "esp. de vegetal; as sementes são usadas para fazer colares"
+    },
+    "AYõKORA": {
+        "definition": "japim-amarelo (Icterus sp)"
+    },
+    "AYÛME": {
+        "definition": "vem! Para cá!"
+    },
+    "AYUWAUTH HIRI": {
+        "definition": "nome de grupo local"
+    },
+    "AYKAMU": {
+        "definition": "esp. de pau para desafio"
+    }
+}
+}
+
+# Convertendo os dados para JSON
+json_yanomami = json.dumps(dados_yanomami, indent=4)
+json_refer = json.dumps(dados_refer, indent=4)
+jason_dicionario = json.dumps(dados_dicionario, indent=4)
+
